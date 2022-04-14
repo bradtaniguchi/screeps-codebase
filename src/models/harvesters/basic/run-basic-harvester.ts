@@ -1,3 +1,9 @@
+/**
+ * Basic harvesters gather energy and transfer them to one of three targets:
+ * - spawn
+ * - tower
+ * - extension
+ */
 export const runBasicHarvester = (creep: Creep) => {
   // Default all harvesters not doing something to be idle/not-working.
   creep.memory.working = false;
@@ -10,36 +16,18 @@ export const runBasicHarvester = (creep: Creep) => {
   }
   // If the creep is "full" then go to a structure.
   // TODO: optimize to go to the "correct" structure.
-  const structure = creep.pos.findClosestByPath(FIND_STRUCTURES);
+  const structure = creep.pos.findClosestByRange(FIND_MY_STRUCTURES, {
+    filter: (structure) => (structure.structureType === STRUCTURE_EXTENSION ||
+      structure.structureType === STRUCTURE_SPAWN ||
+      structure.structureType === STRUCTURE_TOWER) &&
+    structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0
+    }
+  );
   if (!structure) return; // TODO: handle as will be idle
-
-  // TODO:
+  const successfulTransfer = creep.transfer(structure, RESOURCE_ENERGY);
+  creep.memory.working = true;
+  if (successfulTransfer === ERR_NOT_IN_RANGE) {
+    creep.moveTo(structure, {visualizePathStyle: {stroke: '#ffffff'}});
+  }
 
 };
-// var roleHarvester = {
-
-//   /** @param {Creep} creep **/
-//   run: function(creep) {
-//     if(creep.store.getFreeCapacity() > 0) {
-//           var sources = creep.room.find(FIND_SOURCES);
-//           if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
-//               creep.moveTo(sources[0], {visualizePathStyle: {stroke: '#ffaa00'}});
-//           }
-//       }
-//       else {
-//           var targets = creep.room.find(FIND_STRUCTURES, {
-//                   filter: (structure) => {
-//                       return (structure.structureType == STRUCTURE_EXTENSION || structure.structureType == STRUCTURE_SPAWN) &&
-//                           structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
-//                   }
-//           });
-//           if(targets.length > 0) {
-//               if(creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-//                   creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffffff'}});
-//               }
-//           }
-//       }
-// }
-// };
-
-// module.exports = roleHarvester;
