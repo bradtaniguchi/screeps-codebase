@@ -1,22 +1,10 @@
 import { BASIC_HARVESTER_ROLE } from "models/harvesters/basic/basic-harvester-role";
 import { createBasicHarvester } from "models/harvesters/basic/create-basic-harvester";
+import { getCreeps, MyCreeps } from "./get-creeps";
 
-export const createCreeps = () => {
-  const { harvesters } = Object.values(Game.creeps).reduce(
-    (acc, creep) => {
-      if(BASIC_HARVESTER_ROLE.includes(creep.memory.role)) {
-        acc.harvesters.push(creep);
-      }
-
-      return acc;
-    },
-    { harvesters: [] } as {
-      harvesters: Creep[];
-    }
-  );
-
+export const createCreeps = ({myCreeps}: {myCreeps: MyCreeps}) => {
+  const {harvesters} = myCreeps;
   createHarvesters({ harvesters });
-
 };
 
 const createHarvesters = ({harvesters}: {harvesters: Creep[]}) => {
