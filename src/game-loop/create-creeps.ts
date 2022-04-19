@@ -1,22 +1,23 @@
-import { BASIC_HARVESTER_ROLE } from "models/harvesters/basic/basic-harvester-role";
 import { createBasicHarvester } from "models/harvesters/basic/create-basic-harvester";
-import { getCreeps, MyCreeps } from "./get-creeps";
+import { MyCreeps } from "./get-creeps";
 
-export const createCreeps = ({myCreeps}: {myCreeps: MyCreeps}) => {
-  const {harvesters} = myCreeps;
+/**
+ * Creates creeps based around pre-existing creeps types.
+ */
+export const createCreeps = ({ myCreeps }: { myCreeps: MyCreeps }) => {
+  const { harvesters } = myCreeps;
   createHarvesters({ harvesters });
 };
 
-const createHarvesters = ({harvesters}: {harvesters: Creep[]}) => {
+const createHarvesters = ({ harvesters }: { harvesters: Creep[] }) => {
   if (harvesters.length < 3) {
     // TODO: update hard-coded harvester amount
     createBasicHarvester({
-      spawnName: 'Spawn1', // TODO: update hard-coded spawn name
+      spawnName: "Spawn1", // TODO: update hard-coded spawn name
       harvesters
     });
   }
 };
-
 
 // if(Game.spawns['Spawn1'].spawning) {
 //   var spawningCreep = Game.creeps[Game.spawns['Spawn1'].spawning.name];
