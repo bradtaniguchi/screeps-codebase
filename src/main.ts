@@ -1,3 +1,6 @@
+import { createCreeps } from "game-loop/create-creeps";
+import { getCreeps } from "game-loop/get-creeps";
+import { runCreeps } from "game-loop/run-creeps";
 import { ErrorMapper } from "utils/ErrorMapper";
 
 declare global {
@@ -33,6 +36,11 @@ declare global {
 // This utility uses source maps to get the line numbers and file names of the original, TS source code
 export const loop = ErrorMapper.wrapLoop(() => {
   console.log(`Current game tick is ${Game.time}`);
+
+  // Start actual game loops
+  const myCreeps = getCreeps();
+  createCreeps({ myCreeps });
+  runCreeps({ myCreeps });
 
   // Automatically delete memory of missing creeps
   for (const name in Memory.creeps) {
