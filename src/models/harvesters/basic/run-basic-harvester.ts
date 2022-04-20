@@ -33,8 +33,6 @@ export const runBasicHarvester = (creep: Creep) => {
       );
     }
   });
-  // TODO: handle upgrading controller
-  console.log("structure " + !!structure);
   if (!structure) return; // TODO: handle as will be idle
   const transferResult = creep.transfer(structure, RESOURCE_ENERGY);
   creep.memory.working = true;
