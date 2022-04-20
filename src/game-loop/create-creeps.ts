@@ -34,12 +34,17 @@ const createHarvesters = ({
 
       return;
     }
-    console.log(`Creating harvester ${harvesters.length} / ${maxHarvesters} at ${spawnName}`);
 
-    createBasicHarvester({
+    const createResult = createBasicHarvester({
       spawnName,
       harvesters
     });
+
+    if (createResult !== ERR_NOT_ENOUGH_ENERGY) {
+      console.log(`Creating harvester ${harvesters.length} / ${maxHarvesters} at ${spawnName}`);
+    }
+
+    if (createResult === ERR_NAME_EXISTS) console.log("harvester name already exists");
   }
 };
 

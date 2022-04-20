@@ -9,8 +9,13 @@ import { CreepRole } from "./creep-roles";
  */
 export const createName = ({ prefix, role, creeps }: { prefix?: string; role: CreepRole; creeps: Creep[] }) => {
   const highest = creeps
-    .map(creep => Number(creep.name.split("_")[2]))
+    .map(creep => {
+      const nameParts = creep.name.split("_");
+      return Number(nameParts[nameParts.length - 1]);
+    })
     .reduce((highest, harvestNum) => (harvestNum > highest ? harvestNum : highest), 0);
 
-  return [prefix, role, highest + 1].join("_");
+  const name = [prefix, role, highest + 1].filter(val => val !== "").join("_");
+
+  return name;
 };
