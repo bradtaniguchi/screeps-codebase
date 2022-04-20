@@ -11,6 +11,7 @@ export const runBasicHarvester = (creep: Creep) => {
 
 /**
  * Performs the actual harvest logic for the given resource.
+ * TODO: move to "actions" folder
  */
 const harvest = ({ resource, creep }: { resource: ResourceConstant; creep: Creep }) => {
   // Default all harvesters not doing something to be idle/not-working.
