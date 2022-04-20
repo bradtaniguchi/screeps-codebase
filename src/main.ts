@@ -37,6 +37,9 @@ declare global {
 export const loop = ErrorMapper.wrapLoop(() => {
   if (Game.time % 5 === 0) console.log(`>> ${Game.time}`);
 
+  // Testing
+  // console.log("rooms", Object.values(Game.rooms).join(", "));
+
   // Start actual game loops
   const myCreeps = getCreeps();
   createCreeps({ myCreeps });
