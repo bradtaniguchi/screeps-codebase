@@ -22,8 +22,8 @@ const createHarvesters = ({
   maxHarvesters?: number;
 }) => {
   spawnName = spawnName ?? "hq-spawn";
-  maxHarvesters = maxHarvesters ?? 20;
-  if (harvesters.length <= 20) {
+  maxHarvesters = maxHarvesters ?? 10;
+  if (harvesters.length <= 10) {
     const spawn = Game.spawns[spawnName];
     if (!spawn) {
       console.log("no spawn found with name:" + spawnName);
