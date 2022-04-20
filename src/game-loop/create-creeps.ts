@@ -9,13 +9,33 @@ export const createCreeps = ({ myCreeps }: { myCreeps: MyCreeps }) => {
   createHarvesters({ harvesters });
 };
 
+/**
+ * Creates harvesters based around pre-existing harvesters types.
+ *
+ * TODO: update hard-code
+ */
 const createHarvesters = ({ harvesters }: { harvesters: Creep[] }) => {
+  const spawnName = "hq-spawn";
   if (harvesters.length < 3) {
-    // TODO: update hard-coded harvester amount
-    createBasicHarvester({
-      spawnName: "Spawn1", // TODO: update hard-coded spawn name
-      harvesters
-    });
+    const spawn = Game.spawns[spawnName];
+    if (!spawn) {
+      console.error("no spawn found with name:" + spawnName);
+      return;
+    }
+    if (spawn.spawning) {
+      console.log("spawning...");
+
+      return;
+    }
+    console.log(`Creating harvester ${harvesters.length} / 3 at ${spawnName}`);
+
+    console.log(
+      "created harvester: " +
+        createBasicHarvester({
+          spawnName,
+          harvesters
+        })
+    );
   }
 };
 
