@@ -1,0 +1,34 @@
+/**
+ * Basic builders build any structure nearby without question.
+ * These currently gather resources themselves and use it to build.
+ */
+export const runBasicBuilder = (creep: Creep) => {
+  buildClosest({ creep });
+};
+
+/**
+ * Builds whatever construction site is closest
+ * TODO: move to "actions" folder
+ */
+const buildClosest = ({ creep }: { creep: Creep }) => {
+  creep.memory.working = false;
+  const capacity = creep.store.getFreeCapacity(RESOURCE_ENERGY);
+  if (capacity) {
+    const source = creep.pos.findClosestByRange(FIND_SOURCES_ACTIVE);
+    if (!source) return; // TODO: handle as will be idle
+    creep.memory.working = true;
+    creep.memory.room = source.room.name;
+    const harvestResult = creep.harvest(source);
+    if (harvestResult === ERR_NOT_IN_RANGE) creep.moveTo(source, { visualizePathStyle: { stroke: "#00ff00" } });
+    return;
+  }
+
+  const site = creep.pos.findClosestByRange(FIND_MY_CONSTRUCTION_SITES, {
+    // TODO: make this configurable
+    filter: site => site.structureType === STRUCTURE_ROAD
+  });
+  if (!site) return; // TODO: handle as will be idle
+  const buildResult = creep.build(site);
+  creep.memory.working = true;
+  if (buildResult === ERR_NOT_IN_RANGE) creep.moveTo(site, { visualizePathStyle: { stroke: "#00ff00" } });
+};
