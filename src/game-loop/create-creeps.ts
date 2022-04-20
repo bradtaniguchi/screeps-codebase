@@ -12,7 +12,7 @@ export const createCreeps = ({ myCreeps }: { myCreeps: MyCreeps }) => {
 
 /**
  * Creates builders based on the status of constructions within the room
- * the spawn is in.
+ * the spawn is in. Currently set to 1 builder for 4 construction sites rounded up
  */
 const createBuilders = ({ builders, spawnName }: { builders: Creep[]; spawnName?: string }) => {
   spawnName = spawnName ?? "hq-spawn";
@@ -20,7 +20,7 @@ const createBuilders = ({ builders, spawnName }: { builders: Creep[]; spawnName?
   if (!spawn) return;
   const sites = spawn.room.find(FIND_MY_CONSTRUCTION_SITES);
   if (!sites.length) return;
-  if (builders.length <= sites.length) {
+  if (builders.length <= Math.ceil(sites.length / 4)) {
     // If there are less builders than sites remaining, then create builders
     if (spawn.spawning) {
       console.log(`spawning builder at ${spawnName}...`);

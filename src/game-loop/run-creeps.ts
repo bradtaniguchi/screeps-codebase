@@ -1,4 +1,5 @@
 import { BASIC_BUILDER_ROLE } from "models/builder/basic-builder-role";
+import { runBasicBuilder } from "models/builder/run-basic-builder";
 import { BASIC_HARVESTER_ROLE } from "models/harvesters/basic/basic-harvester-role";
 import { runBasicHarvester } from "models/harvesters/basic/run-basic-harvester";
 import { MyCreeps } from "./get-creeps";
@@ -21,7 +22,7 @@ const runHarvesters = ({ harvesters }: MyCreeps) => {
 function runBuilders({ builders }: MyCreeps) {
   for (let builder of builders) {
     if (builder.memory.role === BASIC_BUILDER_ROLE) {
-      runBasicHarvester(builder);
+      runBasicBuilder(builder);
     }
   }
 }

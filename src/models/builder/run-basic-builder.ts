@@ -23,12 +23,12 @@ const buildClosest = ({ creep }: { creep: Creep }) => {
     return;
   }
 
-  const sites = creep.pos.findClosestByRange(FIND_MY_CONSTRUCTION_SITES, {
+  const site = creep.pos.findClosestByRange(FIND_MY_CONSTRUCTION_SITES, {
     // TODO: make this configurable
     filter: site => site.structureType === STRUCTURE_ROAD
   });
-  if (!sites) return; // TODO: handle as will be idle
+  if (!site) return; // TODO: handle as will be idle
+  const buildResult = creep.build(site);
   creep.memory.working = true;
-  const buildResult = creep.build(sites);
-  if (buildResult === ERR_NOT_IN_RANGE) creep.moveTo(sites, { visualizePathStyle: { stroke: "#00ff00" } });
+  if (buildResult === ERR_NOT_IN_RANGE) creep.moveTo(site, { visualizePathStyle: { stroke: "#00ff00" } });
 };
