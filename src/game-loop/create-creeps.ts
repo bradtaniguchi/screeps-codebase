@@ -16,7 +16,8 @@ export const createCreeps = ({ myCreeps }: { myCreeps: MyCreeps }) => {
  */
 const createHarvesters = ({ harvesters }: { harvesters: Creep[] }) => {
   const spawnName = "hq-spawn";
-  if (harvesters.length < 3) {
+  const maxHarvesters = 20;
+  if (harvesters.length <= 20) {
     const spawn = Game.spawns[spawnName];
     if (!spawn) {
       console.error("no spawn found with name:" + spawnName);
@@ -27,7 +28,7 @@ const createHarvesters = ({ harvesters }: { harvesters: Creep[] }) => {
 
       return;
     }
-    console.log(`Creating harvester ${harvesters.length} / 3 at ${spawnName}`);
+    console.log(`Creating harvester ${harvesters.length} / ${maxHarvesters} at ${spawnName}`);
 
     console.log(
       "created harvester: " +
